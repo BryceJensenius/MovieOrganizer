@@ -56,6 +56,19 @@ public class MediaItem implements Reviewable{
 	}
 	
 	/*
+	 * Creates Media Item with given name and given finish date
+	 * @param name - name of this media item
+	 * @param localDate - date this media was finished
+	 */
+	public MediaItem(String name, LocalDate localDate) {
+		if(name == null || localDate == null) {
+			throw new NullPointerException("Name or Date are Null.");
+		}
+		this.name = name;
+		this.finishDate = localDate;
+	}
+	
+	/*
 	 * Sets the finish date to MM-DD-YYYY
 	 * @param date - date the media was finished
 	 */

@@ -20,10 +20,19 @@ public class PersonHistory {
 	private ArrayList<Movie> movies;
 	
 	/*
+	 * Generic Media Item Just incase I want to use it
+	 */
+	private ArrayList<MediaItem> media;
+	
+	/*
 	 * @param name
 	 */
 	public PersonHistory(String name) {
 		this.name = name;
+		
+		shows = new ArrayList<TVShow>();
+		movies = new ArrayList<Movie>();
+		media = new ArrayList<MediaItem>();
 	}
 	
 	/*
@@ -38,6 +47,13 @@ public class PersonHistory {
 	 */
 	public void addShow(TVShow s) {
 		shows.add(s);
+	}
+	
+	/*
+	 * @param m - Generic media Item
+	 */
+	public void addMedia(MediaItem m) {
+		media.add(m);
 	}
 	
 	/*
@@ -72,8 +88,15 @@ public class PersonHistory {
 		return movies;
 	}
 	
+	/*
+	 * @return media - all generic media items
+	 */
+	public ArrayList<MediaItem> getMedia(){
+		return media;
+	}
+	
 	@Override
 	public String toString() {
-		return name + shows.size() + " shows, " + movies.size() + " movies";
+		return name + shows.size() + " shows, " + movies.size() + " movies, " + media.size() + " media.";
 	}
 }
