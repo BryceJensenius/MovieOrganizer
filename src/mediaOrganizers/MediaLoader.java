@@ -39,6 +39,7 @@ public class MediaLoader {
 			
 			br.close();
 		} catch(FileNotFoundException e) {//they don't yet have a file
+			System.out.println("Failed to Read File.\n");
 			return null;
 		}catch (IOException e) {//required catch block for br.close()
 			e.printStackTrace();
@@ -85,6 +86,7 @@ public class MediaLoader {
 						readRating(m, line);//adds line of rating to mediaitem
 						line = br.readLine();
 					}
+					p.addMovie((Movie)m);
 					break;
 				case "TV"://TVShow, I like how clean this looks, until looking at the method
 					line = readShowLine(br, sscnr.nextLine().trim(), p);//returns the next line to be read
