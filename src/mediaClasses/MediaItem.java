@@ -57,6 +57,7 @@ public class MediaItem implements Reviewable{
 	
 	/*
 	 * Creates Media Item with given name and given finish date
+	 * Used when created form MediaLoader
 	 * @param name - name of this media item
 	 * @param localDate - date this media was finished
 	 */

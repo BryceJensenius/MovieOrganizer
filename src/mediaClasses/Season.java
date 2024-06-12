@@ -1,5 +1,7 @@
 package mediaClasses;
 
+import java.time.LocalDate;
+
 public class Season extends MediaItem implements Reviewable{
 	
 	/*
@@ -29,6 +31,14 @@ public class Season extends MediaItem implements Reviewable{
 	 */
 	public Season(String name, String date) {
 		super(name, date);
+	}
+	
+	/*
+	 * Name of season and date they finished watching
+	 * Used by MediaLoader to load in user information
+	 */
+	public Season(String name, LocalDate localDate) {
+		super(name, localDate);
 	}
 	
 	/*

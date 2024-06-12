@@ -1,5 +1,6 @@
 package mediaClasses;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class TVShow extends MediaItem{
@@ -9,7 +10,7 @@ public class TVShow extends MediaItem{
 	protected ArrayList<Season> seasons;
 	
 	/*
-	 * Creates Movie with given name and finish date as Current Date
+	 * Creates TVShow with given name and finish date as Current Date
 	 * @param name - name of this media item
 	 * @param seasons - number of seasons in this show
 	 */
@@ -19,13 +20,23 @@ public class TVShow extends MediaItem{
 	}
 	
 	/*
-	 * Creates Movie with given name and given finish date
+	 * Creates TVShow with given name and given finish date
 	 * @param name - name of this media item
 	 * @param date - date this media was finished
-	 * @param seasons - number of seasons in this show
 	 */
 	public TVShow(String name, String date) {
 		super(name, date);
+		seasons = new ArrayList<Season>();
+	}
+	
+	/*
+	 * Creates TVShow with given name and given finish date object
+	 * Used by MediaLoader for Creation
+	 * @param name - name of this media item
+	 * @param localDate - localDate for when this media was finished
+	 */
+	public TVShow(String name, LocalDate localDate) {
+		super(name, localDate);
 		seasons = new ArrayList<Season>();
 	}
 	

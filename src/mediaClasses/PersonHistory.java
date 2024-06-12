@@ -46,6 +46,7 @@ public class PersonHistory {
 	 * @param s - TVShow to add to history
 	 */
 	public void addShow(TVShow s) {
+		//Hmm, why didn't I call this addTVShow?
 		shows.add(s);
 	}
 	

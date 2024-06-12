@@ -11,6 +11,7 @@ import java.util.Scanner;
 import mediaClasses.MediaItem;
 import mediaClasses.Movie;
 import mediaClasses.PersonHistory;
+import mediaClasses.Season;
 import mediaClasses.TVShow;
 
 /*
@@ -57,24 +58,36 @@ public class MediaLoader {
 		Scanner sscnr = null;
 		
 		try {
-			while((line = br.readLine()) != null) {
+			line = br.readLine();
+			while(line != null) {
+				MediaItem m;
 				sscnr = new Scanner(line);
 				String type = sscnr.next();
 				
 				switch(type) {
 				case "MI"://MediaItem
-					MediaItem m = readMediaLine(line);
-					
+					m = readMediaLine(sscnr.nextLine().trim());//trim type off the start of line
+					line = br.readLine();//read next line to check for review
+					sscnr.close();//close and open scanner for new line
+					sscnr = new Scanner(line);
 					if(sscnr.hasNextInt()) {//number means a rating
-						readRating(m, sscnr.nextLine());//adds line of rating to mediaitem
+						readRating(m, line);//adds line of rating to mediaitem
+						line = br.readLine();//read line for next iteration of loop
 					}
-					p.addMedia(readMediaLine(line));//add item to person
+					p.addMedia(m);//add item to person
 					break;
 				case "MO"://Movie
-					p.addMovie(readMovieLine(line));
+					m = readMovieLine(sscnr.nextLine().trim());
+					line = br.readLine();
+					sscnr.close();
+					sscnr = new Scanner(line);
+					if(sscnr.hasNextInt()) {//number means a rating
+						readRating(m, line);//adds line of rating to mediaitem
+						line = br.readLine();
+					}
 					break;
-				case "TV"://TVShow
-					p.addShow(readShowLine(br, line));
+				case "TV"://TVShow, I like how clean this looks, until looking at the method
+					line = readShowLine(br, sscnr.nextLine().trim(), p);//returns the next line to be read
 					break;
 				default:
 					break;
@@ -135,7 +148,19 @@ public class MediaLoader {
 	 */
 	private static Movie readMovieLine(String line) {
 		Movie m;
+		Scanner sscnr = new Scanner(line);
+		String name = sscnr.next();
 		
+		//get date
+		int year = sscnr.nextInt();//add try here and throws an exception, if so tell them it failed and check the file
+		int month = sscnr.nextInt();
+		int day = sscnr.nextInt();
+		int length = sscnr.nextInt();
+		
+		//make movie with this name, finish date, and length
+		m = new Movie(name, makeDate(year, month, day), length);
+		
+		sscnr.close();
 		return m;
 	}
 	
@@ -146,13 +171,66 @@ public class MediaLoader {
 	 * 
 	 * @param br - used to read input
 	 * @param line
-	 * @return m - TVShow Item to add
+	 * @param p - person to add to
+	 * @return line - next line for MediaLoader to read from
 	 */
-	private static TVShow readShowLine(BufferedReader br, String line) {
-		TVShow t;
+	private static String readShowLine(BufferedReader br, String line, PersonHistory p) throws IOException {
+		TVShow m;
+		Scanner sscnr = new Scanner(line);
+		String name = sscnr.next();
 		
-		return t;
+		//get date
+		int year = sscnr.nextInt();
+		int month = sscnr.nextInt();
+		int day = sscnr.nextInt();
+		
+		//make TVShow item with this name and finish date
+		m = new TVShow(name, makeDate(year, month, day));
+		
+		int numSeasons = sscnr.nextInt();
+		
+		//all other iterations
+		line = br.readLine();//check for review or season
+		sscnr.close();
+		sscnr = new Scanner(line);
+		if(sscnr.hasNextInt()) {//number means a rating
+			readRating(m, line);//adds line of rating to mediaitem
+			line = br.readLine();//grab line for next season
+		}
+		for(int i = 0; i < numSeasons; i++) {//read a season line for numSeasons
+			Season s;
+			sscnr.close();//close scanner to be safe
+			sscnr = new Scanner(line);//open scanner on new line read
+			name = sscnr.next();
+			
+			//get date
+			year = sscnr.nextInt();
+			month = sscnr.nextInt();
+			day = sscnr.nextInt();
+			
+			//make TVShow item with this name and finish date
+			s = new Season(name, makeDate(year, month, day));
+			
+			if(sscnr.hasNextInt()) {//check if numEpisodes is at end, add if so
+				s.setEpisodes(sscnr.nextInt());
+			}
+			
+			line = br.readLine();//read next line to check for review
+			sscnr.close();//close and open scanner for new line
+			sscnr = new Scanner(line);
+			if(sscnr.hasNextInt()) {//number means a rating
+				readRating(m, line);//adds line of rating on season
+				line = br.readLine();//read line for next iteration of loop OR to be returned if it is next media item
+			}
+			
+			sscnr.close();
+			m.addSeason(s);//add the season to the show
+		}
+		
+		p.addShow(m);//add show to person
+		return line;//this line was read at the end of the last iteration of loop and is next medai item
 	}
+	
 	
 	private static LocalDate makeDate(int year, int month, int day) {
 		return LocalDate.of(year, month, day);
