@@ -22,8 +22,9 @@ public class MediaItem implements Reviewable{
 	
 	/*
 	 * Media Items rating out of 10
+	 * -1 means no review
 	 */
-	protected int rating;
+	protected int rating = -1;
 	
 	/*
 	 * Optional Review of Media Item
@@ -45,7 +46,7 @@ public class MediaItem implements Reviewable{
 	/*
 	 * Creates Media Item with given name and given finish date
 	 * @param name - name of this media item
-	 * @param date - date this media was finished
+	 * @param date - date this media was finished, MM-DD-YYYY
 	 */
 	public MediaItem(String name, String date) {
 		if(name == null || date == null) {
@@ -53,6 +54,13 @@ public class MediaItem implements Reviewable{
 		}
 		this.name = name;
 		setFinishDate(date);
+	}
+	
+	/*
+	 * @return name - name of this MediaItem
+	 */
+	public String getName() {
+		return name;
 	}
 	
 	/*
@@ -105,10 +113,27 @@ public class MediaItem implements Reviewable{
 	
 	/*
 	 * sets rating in range of 0 to 10
+	 * no review provided so default none is given
 	 * @param rating
 	 */
-	public void giveRating(int rating) {
+	public void giveRating(int rating) {//***Potentially Not needed, Kept Just in case future Use***
 		this.rating = Math.max(0, Math.min(rating, 10));
+		giveReview("None");
+	}
+	
+	/*
+	 * sets rating in range of 0 to 10
+	 * @param rating
+	 * @param review - review to give with rating
+	 */
+	public void giveRating(int rating, String review) {
+		
+		if(review == null) {
+			giveReview("None");
+		}
+		
+		this.rating = Math.max(0, Math.min(rating, 10));
+		giveReview(review);
 	}
 	
 	/*

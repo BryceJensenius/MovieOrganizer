@@ -41,6 +41,14 @@ public class TVShow extends MediaItem{
 	}
 	
 	/*
+	 * @return number of seasons in this show
+	 * 		Could be 0
+	 */
+	public int getNumSeasons() {
+		return seasons.size();
+	}
+	
+	/*
 	 * @return seasons
 	 */
 	public ArrayList<Season> getSeasons() {

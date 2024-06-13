@@ -36,6 +36,13 @@ public class PersonHistory {
 	}
 	
 	/*
+	 * @return name - name of this person
+	 */
+	public String getName() {
+		return name;
+	}
+	
+	/*
 	 * @param m - movie to add to history
 	 */
 	public void addMovie(Movie m) {

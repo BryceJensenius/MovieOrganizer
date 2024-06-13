@@ -1,5 +1,6 @@
 package tesingClasses;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import mediaClasses.MediaItem;
@@ -10,7 +11,13 @@ import mediaClasses.PersonHistory;
 
 public class MediaLoaderTest {
 	public static void main(String[] args) {
-		PersonHistory p = MediaLoader.loadHistory("Bryce");
+		PersonHistory p;
+		try {
+			p = MediaLoader.loadHistory("Bryce");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ArrayList<MediaItem> m = p.getMedia();
 		for(MediaItem media : m) {
 			System.out.println(media);

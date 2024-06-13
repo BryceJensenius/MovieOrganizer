@@ -16,8 +16,9 @@ public class Season extends MediaItem implements Reviewable{
 	
 	/*
 	 * number of episodes in this season
+	 * unknown or unset is -1
 	 */
-	protected int episodes;
+	protected int episodes = -1;
 	
 	/*
 	 * Makes a Season for a show

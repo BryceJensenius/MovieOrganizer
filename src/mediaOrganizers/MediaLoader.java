@@ -21,11 +21,18 @@ public class MediaLoader {
 	
 	/*
 	 * Given a persons name, it loads their file and creates
+	 * Throws null points exception is name is null
+	 * 
+	 * If they don't have a file yet, throws exception so one can be created
 	 * 
 	 * If this person is not yet on file, it returns null
 	 * a PersonHistory object holding all the loaded information
 	 */
-	public static PersonHistory loadHistory(String name) {
+	public static PersonHistory loadHistory(String name) throws FileNotFoundException{
+		if(name == null) {
+			throw new NullPointerException();
+		}
+		
 		PersonHistory p = new PersonHistory(name);
 		
 		String fileName = name + "MediaFile.txt";//get file name from their name
@@ -38,9 +45,8 @@ public class MediaLoader {
 			LoadFromFile(br, p);
 			
 			br.close();
-		} catch(FileNotFoundException e) {//they don't yet have a file
-			System.out.println("Failed to Read File.\n");
-			return null;
+		}catch(FileNotFoundException e) {//needed because FNFException is an IOException
+			throw e;
 		}catch (IOException e) {//required catch block for br.close()
 			e.printStackTrace();
 		}
