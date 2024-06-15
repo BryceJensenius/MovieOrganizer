@@ -75,17 +75,31 @@ public class MediaLoader {
 				case "MI"://MediaItem
 					m = readMediaLine(sscnr.nextLine().trim());//trim type off the start of line
 					line = br.readLine();//read next line to check for review
-					sscnr.close();//close and open scanner for new line
+					
+					if(line == null) {//no more media to read
+						sscnr.close();//close and open scanner for new line
+						return;
+					}
+					
+					sscnr.close();//close and open on new line to check for rating
 					sscnr = new Scanner(line);
+					
 					if(sscnr.hasNextInt()) {//number means a rating
 						readRating(m, line);//adds line of rating to mediaitem
 						line = br.readLine();//read line for next iteration of loop
 					}
 					p.addMedia(m);//add item to person
+					sscnr.close();
 					break;
 				case "MO"://Movie
 					m = readMovieLine(sscnr.nextLine().trim());
 					line = br.readLine();
+
+					if(line == null) {//no more media to read
+						sscnr.close();//close and open scanner for new line
+						return;
+					}
+					
 					sscnr.close();
 					sscnr = new Scanner(line);
 					if(sscnr.hasNextInt()) {//number means a rating
@@ -224,6 +238,12 @@ public class MediaLoader {
 			}
 			
 			line = br.readLine();//read next line to check for review
+
+			if(line == null) {//no more media to read
+				sscnr.close();//close and open scanner for new line
+				return null;
+			}
+			
 			sscnr.close();//close and open scanner for new line
 			sscnr = new Scanner(line);
 			if(sscnr.hasNextInt()) {//number means a rating

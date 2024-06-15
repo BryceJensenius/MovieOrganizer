@@ -55,6 +55,10 @@ public class Movie extends MediaItem{
 	
 	@Override
 	public String toString() {
-		return this.name + ": " + getRating() + "/10 stars, " + getLength() + " minutes";
+		if(rating != -1) {//if they specified a rating
+			return this.name + ": " + getRating() + "/10 stars, " + getLength() + " minutes";
+		}else {
+			return this.name + ": " + getFinishDateString() + ", " + getLength() + " minutes";
+		}
 	}
 }

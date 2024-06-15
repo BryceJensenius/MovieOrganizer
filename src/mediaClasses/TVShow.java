@@ -67,6 +67,17 @@ public class TVShow extends MediaItem{
 	
 	@Override
 	public String toString() {
-		return this.name + ": " + getRating() + "/10 stars, " + seasons.size() + " seasons";
+		String output;
+		if(rating != -1) {//if they specified a rating
+			output = this.name + ": " + getRating() + "/10 stars";
+		}else {
+			output = this.name + ": " + getFinishDateString();
+		}
+		
+		if(seasons.size() != 0) {//number of seasons was specified so add it on end
+			output +=  ", " + seasons.size() + " seasons";
+		}
+		
+		return output;
 	}
 }

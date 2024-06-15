@@ -160,7 +160,11 @@ public class MediaItem implements Reviewable{
 	
 	@Override
 	public String toString() {
-		return this.name + ": " + getRating() + "/10 " + getFinishDateString();
+		if(rating != -1) {//if they specified a rating
+			return this.name + ": " + getRating() + "/10 SR's, " + getFinishDateString();
+		}else {
+			return this.name + ": " + getFinishDateString();
+		}
 	}
 	
 	/*
